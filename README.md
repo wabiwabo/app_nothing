@@ -107,7 +107,3 @@ Circuit breaker diimplementasikan menggunakan Resilience4j untuk meningkatkan re
 
 Proyek ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
 
-## Kontak
-
-Nama - [@your_twitter](https://twitter.com/your_twitter)
-Email - your.email@example.com 
