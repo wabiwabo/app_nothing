@@ -2,44 +2,44 @@ package id.val.learn01.repository;
 
 import id.val.learn01.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Interface repository untuk entitas User.
+ * Repository interface for User entity.
  * 
- * PENJELASAN DETAIL:
- * 1. Fungsi Interface:
- *    - Menyediakan akses ke data User dalam database
- *    - Mengabstraksi operasi database
- *    - Menyediakan method CRUD dasar
+ * DETAILED EXPLANATION:
+ * 1. Interface Function:
+ *    - Provides data access operations
+ *    - Extends JpaRepository for CRUD operations
+ *    - Manages database interactions
+ *    - Implements data persistence
  * 
- * 2. Pola Desain yang Digunakan:
+ * 2. Design Patterns Used:
  *    - Repository Pattern:
- *      * Mengabstraksi layer persistensi data
- *      * Memisahkan logika akses data dari logika bisnis
- *      * Menyediakan interface yang bersih untuk operasi data
+ *      * Abstracts data access layer
+ *      * Provides collection-like interface
+ *      * Encapsulates data access logic
  * 
- *    - Data Access Object (DAO) Pattern:
- *      * Menyediakan interface abstrak ke database
- *      * Mengenkapsulasi logika akses data
- *      * Memudahkan penggantian implementasi database
+ *    - Data Access Object (DAO):
+ *      * Separates data access from business logic
+ *      * Provides data persistence operations
+ *      * Manages database connections
  * 
- * 3. Cara Kerja:
- *    - Spring Data JPA secara otomatis:
- *      * Mengimplementasikan interface ini saat runtime
- *      * Menyediakan implementasi untuk operasi CRUD standar
- *      * Menangani koneksi database
+ * 3. Interface Methods:
+ *    - Inherited from JpaRepository:
+ *      * save(): Persists entity
+ *      * findById(): Retrieves by ID
+ *      * findAll(): Retrieves all
+ *      * deleteById(): Removes entity
+ *      * existsById(): Checks existence
  * 
- * 4. Method yang Tersedia (Otomatis):
- *    - save(): Menyimpan atau memperbarui entitas
- *    - findById(): Mencari entitas berdasarkan ID
- *    - findAll(): Mengambil semua entitas
- *    - delete(): Menghapus entitas
- *    - count(): Menghitung jumlah entitas
- * 
- * 5. Best Practices:
- *    - Gunakan nama method yang sesuai konvensi Spring Data
- *    - Hindari logika bisnis dalam repository
- *    - Fokus pada operasi data murni
+ * 4. Best Practices:
+ *    - Interface-based design
+ *    - Spring Data JPA usage
+ *    - Proper method naming
+ *    - Type safety
+ *    - Clean architecture
  */
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 } 

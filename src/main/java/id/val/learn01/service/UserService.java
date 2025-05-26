@@ -12,54 +12,54 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Kelas service untuk entitas User yang mengimplementasikan logika bisnis.
+ * Service class for User entity implementing business logic.
  * 
- * PENJELASAN DETAIL:
- * 1. Fungsi Kelas:
- *    - Mengimplementasikan logika bisnis aplikasi
- *    - Menjadi perantara antara controller dan repository
- *    - Menangani validasi dan aturan bisnis
- *    - Mengimplementasikan caching untuk optimasi performa
+ * DETAILED EXPLANATION:
+ * 1. Class Function:
+ *    - Implements application business logic
+ *    - Acts as intermediary between controller and repository
+ *    - Handles validation and business rules
+ *    - Implements caching for performance optimization
  * 
- * 2. Pola Desain yang Digunakan:
+ * 2. Design Patterns Used:
  *    - Service Layer Pattern:
- *      * Memisahkan logika bisnis dari layer lainnya
- *      * Menyediakan interface yang bersih untuk controller
- *      * Memudahkan pengujian unit
+ *      * Separates business logic from other layers
+ *      * Provides clean interface for controller
+ *      * Facilitates unit testing
  * 
  *    - Dependency Injection Pattern:
- *      * Menginjeksi UserRepository ke dalam service
- *      * Mengurangi coupling antar komponen
- *      * Memudahkan pengujian dengan mock objects
+ *      * Injects UserRepository into service
+ *      * Reduces component coupling
+ *      * Enables testing with mock objects
  * 
  *    - Facade Pattern:
- *      * Menyediakan interface yang disederhanakan
- *      * Menyembunyikan kompleksitas sistem
- *      * Memudahkan penggunaan sistem
+ *      * Provides simplified interface
+ *      * Hides system complexity
+ *      * Eases system usage
  * 
  *    - Caching Pattern:
- *      * Menggunakan @Cacheable untuk menyimpan hasil query
- *      * Menggunakan @CacheEvict untuk menghapus cache
- *      * Meningkatkan performa aplikasi
+ *      * Uses @Cacheable for query result storage
+ *      * Uses @CacheEvict for cache invalidation
+ *      * Improves application performance
  * 
- * 3. Method-method dalam Kelas:
- *    - getAllUsers(): Mengambil semua data pengguna (cached)
- *    - getUserById(): Mencari pengguna berdasarkan ID (cached)
- *    - createUser(): Membuat pengguna baru (evicts cache)
- *    - updateUser(): Memperbarui data pengguna (evicts cache)
- *    - deleteUser(): Menghapus pengguna (evicts cache)
+ * 3. Class Methods:
+ *    - getAllUsers(): Retrieves all users (cached)
+ *    - getUserById(): Retrieves user by ID (cached)
+ *    - createUser(): Creates new user (evicts cache)
+ *    - updateUser(): Updates existing user (evicts cache)
+ *    - deleteUser(): Deletes user (evicts cache)
  * 
- * 4. Penanganan Error:
- *    - Menggunakan ResourceNotFoundException untuk data tidak ditemukan
- *    - Memberikan pesan error yang informatif
- *    - Memudahkan debugging
+ * 4. Error Handling:
+ *    - Uses ResourceNotFoundException for not found scenarios
+ *    - Provides informative error messages
+ *    - Facilitates debugging
  * 
  * 5. Best Practices:
- *    - Satu method untuk satu operasi bisnis
- *    - Validasi input sebelum operasi database
- *    - Logging untuk operasi penting
- *    - Penanganan error yang konsisten
- *    - Implementasi caching yang tepat
+ *    - Single responsibility per method
+ *    - Input validation before database operations
+ *    - Logging for critical operations
+ *    - Consistent error handling
+ *    - Proper caching implementation
  */
 @Service
 public class UserService {
@@ -68,23 +68,23 @@ public class UserService {
     private UserRepository userRepository;
     
     /**
-     * Mengambil semua data pengguna dari database
-     * @return List berisi semua data pengguna
+     * Retrieves all users from the database
+     * @return List containing all user data
      */
     @Cacheable(value = "users")
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) {
-            throw new ResourceNotFoundException("Tidak ada data pengguna yang tersedia");
+            throw new ResourceNotFoundException("No user data available");
         }
         return users;
     }
     
     /**
-     * Mencari pengguna berdasarkan ID
-     * @param id ID pengguna yang dicari
-     * @return data pengguna jika ditemukan
-     * @throws ResourceNotFoundException jika pengguna tidak ditemukan
+     * Retrieves user by ID
+     * @param id ID of the user to retrieve
+     * @return user data if found
+     * @throws ResourceNotFoundException if user not found
      */
     @Cacheable(value = "userById", key = "#id")
     public User getUserById(Long id) {
@@ -93,41 +93,41 @@ public class UserService {
     }
     
     /**
-     * Membuat pengguna baru dalam database
-     * @param user data pengguna yang akan dibuat
-     * @return data pengguna yang telah dibuat (dengan ID)
-     * @throws IllegalArgumentException jika data pengguna tidak valid
+     * Creates a new user in the database
+     * @param user user data to create
+     * @return created user data (with ID)
+     * @throws IllegalArgumentException if user data is invalid
      */
     @CacheEvict(value = {"users", "userById"}, allEntries = true)
     public User createUser(User user) {
         if (user.getName() == null || user.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Nama pengguna tidak boleh kosong");
+            throw new IllegalArgumentException("User name cannot be empty");
         }
         if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
-            throw new IllegalArgumentException("Email pengguna tidak boleh kosong");
+            throw new IllegalArgumentException("User email cannot be empty");
         }
         return userRepository.save(user);
     }
     
     /**
-     * Memperbarui data pengguna yang sudah ada
-     * @param id ID pengguna yang akan diperbarui
-     * @param userDetails data baru untuk pengguna
-     * @return data pengguna yang telah diperbarui
-     * @throws ResourceNotFoundException jika pengguna tidak ditemukan
-     * @throws IllegalArgumentException jika data pengguna tidak valid
+     * Updates an existing user's data
+     * @param id ID of the user to update
+     * @param userDetails new user data
+     * @return updated user data
+     * @throws ResourceNotFoundException if user not found
+     * @throws IllegalArgumentException if user data is invalid
      */
     @CacheEvict(value = {"users", "userById"}, allEntries = true)
     public User updateUser(Long id, User userDetails) {
-        // Validasi input
+        // Input validation
         if (userDetails.getName() == null || userDetails.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Nama pengguna tidak boleh kosong");
+            throw new IllegalArgumentException("User name cannot be empty");
         }
         if (userDetails.getEmail() == null || userDetails.getEmail().trim().isEmpty()) {
-            throw new IllegalArgumentException("Email pengguna tidak boleh kosong");
+            throw new IllegalArgumentException("User email cannot be empty");
         }
 
-        // Cari user yang akan diupdate
+        // Find user to update
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         
@@ -139,13 +139,13 @@ public class UserService {
     }
     
     /**
-     * Menghapus pengguna dari database
-     * @param id ID pengguna yang akan dihapus
-     * @throws ResourceNotFoundException jika pengguna tidak ditemukan
+     * Deletes a user from the database
+     * @param id ID of the user to delete
+     * @throws ResourceNotFoundException if user not found
      */
     @CacheEvict(value = {"users", "userById"}, allEntries = true)
     public void deleteUser(Long id) {
-        // Cek apakah user exists
+        // Check if user exists
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User", "id", id);
         }

@@ -4,27 +4,55 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Exception yang dilempar ketika resource (seperti User) tidak ditemukan.
+ * Custom exception for resource not found scenarios.
  * 
- * PENJELASAN:
- * 1. Fungsi:
- *    - Menandai bahwa resource yang dicari tidak ada
- *    - Memberikan pesan error yang informatif
- *    - Mengembalikan status HTTP 404 (NOT_FOUND)
+ * DETAILED EXPLANATION:
+ * 1. Class Function:
+ *    - Handles resource not found errors
+ *    - Provides detailed error messages
+ *    - Maps to HTTP 404 status
+ *    - Supports error tracking
  * 
- * 2. Penggunaan:
- *    - Digunakan di service layer
- *    - Ditangkap oleh global exception handler
- *    - Dikonversi ke response HTTP yang sesuai
+ * 2. Design Patterns Used:
+ *    - Exception Handling Pattern:
+ *      * Custom exception for specific scenarios
+ *      * Consistent error handling
+ *      * Clear error messages
+ * 
+ * 3. Class Features:
+ *    - Extends RuntimeException
+ *    - Maps to HTTP 404
+ *    - Supports resource details
+ *    - Provides formatted messages
+ * 
+ * 4. Usage Examples:
+ *    - When user not found: new ResourceNotFoundException("User", "id", 1)
+ *    - When data not found: new ResourceNotFoundException("No data available")
+ * 
+ * 5. Best Practices:
+ *    - Clear error messages
+ *    - Proper HTTP status
+ *    - Resource identification
+ *    - Exception chaining
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     
-    public ResourceNotFoundException(String message) {
-        super(message);
+    /**
+     * Creates exception with resource details
+     * @param resourceName type of resource
+     * @param fieldName field used for search
+     * @param fieldValue value used for search
+     */
+    public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
+        super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
     }
     
-    public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s tidak ditemukan dengan %s : '%s'", resourceName, fieldName, fieldValue));
+    /**
+     * Creates exception with custom message
+     * @param message error message
+     */
+    public ResourceNotFoundException(String message) {
+        super(message);
     }
 } 

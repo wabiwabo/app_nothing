@@ -6,17 +6,39 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation untuk rate limiting.
+ * Custom annotation for rate limiting implementation.
  * 
- * PENJELASAN:
- * 1. Fungsi:
- *    - Membatasi jumlah request per waktu
- *    - Mencegah abuse API
- *    - Mengatur beban server
+ * DETAILED EXPLANATION:
+ * 1. Annotation Function:
+ *    - Implements rate limiting
+ *    - Controls request frequency
+ *    - Prevents API abuse
+ *    - Manages server load
+ * 
+ * 2. Design Patterns Used:
+ *    - Rate Limiting Pattern:
+ *      * Controls request rate
+ *      * Prevents system overload
+ *      * Ensures fair usage
+ * 
+ * 3. Configuration Options:
+ *    - limit: Maximum requests allowed
+ *    - duration: Time window in seconds
+ * 
+ * 4. Usage:
+ *    - Applied to controller methods
+ *    - Configurable per endpoint
+ *    - Runtime enforcement
+ * 
+ * 5. Best Practices:
+ *    - Reasonable rate limits
+ *    - Clear documentation
+ *    - Proper error handling
+ *    - Monitoring support
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RateLimit {
     int limit() default 100;
-    int duration() default 60; // dalam detik
-} 
+    int duration() default 60; // in seconds
+}

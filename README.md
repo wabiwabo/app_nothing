@@ -1,17 +1,17 @@
 # Learn01 - Spring Boot Application
 
-Aplikasi Spring Boot yang mengimplementasikan CRUD operations dengan MySQL database dan berbagai fitur modern seperti caching, circuit breaker, dan rate limiting.
+A Spring Boot application implementing CRUD operations with MySQL database and modern features including caching, circuit breaker, and rate limiting.
 
-## Fitur Utama
+## Key Features
 
-- **CRUD Operations**: Implementasi lengkap Create, Read, Update, Delete untuk entitas User
-- **Caching**: Implementasi caching menggunakan Spring Cache untuk optimasi performa
-- **Error Handling**: Penanganan error yang komprehensif dengan custom exceptions
-- **Environment Variables**: Konfigurasi menggunakan environment variables untuk keamanan
-- **Rate Limiting**: Pembatasan request untuk mencegah abuse
-- **Circuit Breaker**: Implementasi circuit breaker untuk meningkatkan resilience
+- **CRUD Operations**: Complete implementation of Create, Read, Update, Delete for User entity
+- **Caching**: Performance optimization using Spring Cache
+- **Error Handling**: Comprehensive error handling with custom exceptions
+- **Environment Variables**: Secure configuration using environment variables
+- **Rate Limiting**: Request throttling to prevent abuse
+- **Circuit Breaker**: Resilience implementation for fault tolerance
 
-## Teknologi yang Digunakan
+## Technology Stack
 
 - Java 17
 - Spring Boot 3.2.3
@@ -22,11 +22,11 @@ Aplikasi Spring Boot yang mengimplementasikan CRUD operations dengan MySQL datab
 - Bucket4j
 - Lombok
 
-## Struktur Proyek
+## Project Structure
 
 ```
 src/main/java/id/val/learn01/
-├── config/          # Konfigurasi aplikasi
+├── config/          # Application configuration
 ├── controller/      # REST controllers
 ├── model/          # Entity classes
 ├── repository/     # Data access layer
@@ -36,20 +36,20 @@ src/main/java/id/val/learn01/
 └── aspect/         # AOP aspects
 ```
 
-## Cara Menjalankan Aplikasi
+## Getting Started
 
-1. Clone repository:
+1. Clone the repository:
    ```bash
    git clone [repository-url]
    cd learn01
    ```
 
-2. Buat file `.env` dari template `.env.example`:
+2. Create `.env` file from template:
    ```bash
    cp .env.example .env
    ```
 
-3. Sesuaikan konfigurasi di file `.env`:
+3. Configure environment variables in `.env`:
    ```properties
    DB_HOST=localhost
    DB_PORT=3306
@@ -59,7 +59,7 @@ src/main/java/id/val/learn01/
    SERVER_PORT=8080
    ```
 
-4. Jalankan aplikasi:
+4. Run the application:
    ```bash
    ./mvnw spring-boot:run
    ```
@@ -68,42 +68,44 @@ src/main/java/id/val/learn01/
 
 ### User Management
 
-- `GET /api/users` - Mendapatkan semua user
-- `GET /api/users/{id}` - Mendapatkan user berdasarkan ID
-- `POST /api/users` - Membuat user baru
+- `GET /api/users` - Retrieve all users
+- `GET /api/users/{id}` - Get user by ID
+- `POST /api/users` - Create new user
 - `PUT /api/users/{id}` - Update user
-- `DELETE /api/users/{id}` - Hapus user
+- `DELETE /api/users/{id}` - Delete user
 
 ## Caching
 
-Aplikasi menggunakan Spring Cache dengan dua cache utama:
-- `users`: Cache untuk daftar semua user
-- `userById`: Cache untuk user individual berdasarkan ID
+The application uses Spring Cache with two main caches:
+- `users`: Cache for the complete user list
+- `userById`: Cache for individual users by ID
 
 ## Error Handling
 
-Aplikasi menggunakan custom exceptions:
-- `ResourceNotFoundException`: Ketika resource tidak ditemukan
-- `IllegalArgumentException`: Ketika input tidak valid
+The application implements custom exceptions:
+- `ResourceNotFoundException`: When requested resource is not found
+- `IllegalArgumentException`: When input validation fails
 
 ## Rate Limiting
 
-Rate limiting diimplementasikan menggunakan Bucket4j dengan konfigurasi default:
-- 100 request per 60 detik
+Rate limiting is implemented using Bucket4j with default configuration:
+- 100 requests per 60 seconds
 
 ## Circuit Breaker
 
-Circuit breaker diimplementasikan menggunakan Resilience4j untuk meningkatkan resilience aplikasi.
+Circuit breaker pattern is implemented using Resilience4j to enhance application resilience.
 
 ## Contributing
 
-1. Fork repository
-2. Buat branch fitur baru (`git checkout -b feature/amazing-feature`)
-3. Commit perubahan (`git commit -m 'Add some amazing feature'`)
-4. Push ke branch (`git push origin feature/amazing-feature`)
-5. Buat Pull Request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-Proyek ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
 

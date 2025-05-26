@@ -2,35 +2,44 @@ package id.val.learn01;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
- * Kelas utama aplikasi Spring Boot Learn01.
+ * Main application class for the Spring Boot application.
  * 
- * PENJELASAN DETAIL:
- * 1. Fungsi Kelas:
- *    - Merupakan titik masuk (entry point) aplikasi Spring Boot
- *    - Menginisialisasi dan menjalankan aplikasi Spring Boot
- *    - Mengaktifkan konfigurasi otomatis Spring Boot
+ * DETAILED EXPLANATION:
+ * 1. Class Function:
+ *    - Application entry point
+ *    - Bootstraps Spring context
+ *    - Enables auto-configuration
+ *    - Initializes components
  * 
- * 2. Anotasi @SpringBootApplication:
- *    - Merupakan anotasi gabungan yang terdiri dari:
- *      * @Configuration: Menandai kelas sebagai sumber definisi bean Spring
- *      * @EnableAutoConfiguration: Mengaktifkan konfigurasi otomatis Spring Boot
- *      * @ComponentScan: Memerintahkan Spring untuk mencari komponen lain
+ * 2. Features Enabled:
+ *    - Spring Boot auto-configuration
+ *    - Component scanning
+ *    - Caching support
+ *    - Web application support
  * 
- * 3. Cara Kerja:
- *    - Saat aplikasi dijalankan, Spring Boot akan:
- *      * Memindai semua komponen dalam package
- *      * Mengkonfigurasi aplikasi secara otomatis
- *      * Menjalankan server web embedded
+ * 3. Configuration:
+ *    - Component scanning
+ *    - Auto-configuration
+ *    - Property loading
+ *    - Environment setup
  * 
  * 4. Best Practices:
- *    - Selalu letakkan kelas ini di root package
- *    - Gunakan package yang sesuai dengan struktur aplikasi
- *    - Pastikan semua komponen berada dalam package yang sama atau sub-package
+ *    - Clean architecture
+ *    - Proper configuration
+ *    - Feature enabling
+ *    - Documentation
  */
 @SpringBootApplication
+@EnableCaching
 public class Learn01Application {
+    
+    /**
+     * Main method to start the application
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(Learn01Application.class, args);
     }

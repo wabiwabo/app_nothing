@@ -9,46 +9,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controller REST untuk menangani request HTTP terkait User.
+ * REST Controller for User entity.
  * 
- * PENJELASAN DETAIL:
- * 1. Fungsi Kelas:
- *    - Menangani request HTTP dari client
- *    - Mengimplementasikan endpoint REST API
- *    - Mengkonversi antara format HTTP dan objek domain
+ * DETAILED EXPLANATION:
+ * 1. Class Function:
+ *    - Handles HTTP requests for User operations
+ *    - Provides RESTful endpoints
+ *    - Manages request/response flow
+ *    - Implements rate limiting for API protection
  * 
- * 2. Pola Desain yang Digunakan:
- *    - MVC Pattern (Model-View-Controller):
- *      * Controller: Menangani request dan response
- *      * Model: Menyimpan data (User)
- *      * View: JSON response (tidak ada view terpisah)
- * 
+ * 2. Design Patterns Used:
  *    - REST Controller Pattern:
- *      * Menggunakan anotasi @RestController
- *      * Menangani HTTP method (GET, POST, PUT, DELETE)
- *      * Mengembalikan response dalam format JSON
+ *      * Follows REST architectural style
+ *      * Uses HTTP methods appropriately
+ *      * Returns proper HTTP status codes
  * 
  *    - Dependency Injection Pattern:
- *      * Menginjeksi UserService ke dalam controller
- *      * Mengurangi coupling antar komponen
+ *      * Injects UserService into controller
+ *      * Reduces component coupling
+ *      * Enables testing with mock objects
  * 
- * 3. Endpoint yang Tersedia:
- *    - GET /api/users: Mengambil semua pengguna
- *    - GET /api/users/{id}: Mengambil pengguna berdasarkan ID
- *    - POST /api/users: Membuat pengguna baru
- *    - PUT /api/users/{id}: Memperbarui pengguna
- *    - DELETE /api/users/{id}: Menghapus pengguna
+ * 3. Class Methods:
+ *    - getAllUsers(): GET /api/users
+ *    - getUserById(): GET /api/users/{id}
+ *    - createUser(): POST /api/users
+ *    - updateUser(): PUT /api/users/{id}
+ *    - deleteUser(): DELETE /api/users/{id}
  * 
- * 4. Penanganan Response:
- *    - ResponseEntity: Membungkus response HTTP
- *    - Status code yang sesuai (200, 201, 404)
- *    - Response body dalam format JSON
+ * 4. Error Handling:
+ *    - Uses ResponseEntity for HTTP responses
+ *    - Proper HTTP status codes
+ *    - Consistent response format
  * 
  * 5. Best Practices:
- *    - Satu endpoint untuk satu operasi
- *    - Validasi input request
- *    - Penanganan error yang konsisten
- *    - Dokumentasi API yang jelas
+ *    - Clear endpoint naming
+ *    - Proper HTTP method usage
+ *    - Input validation
+ *    - Consistent response structure
+ *    - Rate limiting implementation
  */
 @RestController
 @RequestMapping("/api/users")
@@ -58,56 +56,53 @@ public class UserController {
     private UserService userService;
     
     /**
-     * Endpoint GET untuk mengambil semua data pengguna
-     * @return List berisi semua data pengguna
+     * Retrieves all users
+     * @return ResponseEntity containing list of users
      */
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     
     /**
-     * Endpoint GET untuk mengambil data pengguna berdasarkan ID
-     * @param id ID pengguna yang dicari
-     * @return ResponseEntity berisi data pengguna jika ditemukan
+     * Retrieves user by ID
+     * @param id ID of the user to retrieve
+     * @return ResponseEntity containing user data
      */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getUserById(id));
     }
     
     /**
-     * Endpoint POST untuk membuat pengguna baru
-     * @param user data pengguna yang akan dibuat
-     * @return data pengguna yang telah dibuat
+     * Creates a new user
+     * @param user user data to create
+     * @return ResponseEntity containing created user data
      */
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(userService.createUser(user));
     }
     
     /**
-     * Endpoint PUT untuk memperbarui data pengguna
-     * @param id ID pengguna yang akan diperbarui
-     * @param userDetails data baru untuk pengguna
-     * @return ResponseEntity berisi data pengguna yang diperbarui
+     * Updates an existing user
+     * @param id ID of the user to update
+     * @param userDetails new user data
+     * @return ResponseEntity containing updated user data
      */
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
-        User updatedUser = userService.updateUser(id, userDetails);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(userService.updateUser(id, userDetails));
     }
     
     /**
-     * Endpoint DELETE untuk menghapus pengguna
-     * @param id ID pengguna yang akan dihapus
-     * @return ResponseEntity dengan status 200 OK jika berhasil
+     * Deletes a user
+     * @param id ID of the user to delete
+     * @return ResponseEntity with no content
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 } 

@@ -1,71 +1,61 @@
 package id.val.learn01.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 /**
- * Kelas entitas User yang merepresentasikan tabel user dalam database.
+ * Entity class representing a User in the system.
  * 
- * PENJELASAN DETAIL:
- * 1. Fungsi Kelas:
- *    - Menyimpan data pengguna
- *    - Memetakan kelas Java ke tabel database
- *    - Menyediakan struktur data untuk transfer data
+ * DETAILED EXPLANATION:
+ * 1. Class Function:
+ *    - Represents user data structure
+ *    - Maps to database table
+ *    - Provides data validation
+ *    - Implements JPA annotations
  * 
- * 2. Pola Desain yang Digunakan:
- *    - Data Transfer Object (DTO) Pattern:
- *      * Memisahkan layer presentasi dari layer bisnis
- *      * Mengurangi jumlah panggilan method
- *      * Meningkatkan performa aplikasi
+ * 2. Design Patterns Used:
+ *    - Entity Pattern:
+ *      * Maps to database table
+ *      * Handles data persistence
+ *      * Manages relationships
  * 
- *    - JPA Entity Pattern:
- *      * Memetakan kelas Java ke tabel database
- *      * Menangani operasi database secara otomatis
- *      * Menyediakan fitur ORM (Object-Relational Mapping)
+ *    - Data Transfer Object (DTO):
+ *      * Transfers data between layers
+ *      * Encapsulates user information
+ *      * Provides data validation
  * 
- * 3. Anotasi yang Digunakan:
- *    - @Entity: 
- *      * Menandai kelas sebagai entitas JPA
- *      * Menunjukkan bahwa kelas ini akan dipetakan ke tabel database
+ * 3. Class Fields:
+ *    - id: Primary key
+ *    - name: User's full name
+ *    - email: User's email address
  * 
- *    - @Data (Lombok):
- *      * Menghasilkan getter dan setter secara otomatis
- *      * Menghasilkan method toString()
- *      * Menghasilkan method equals() dan hashCode()
- *      * Mengurangi boilerplate code
+ * 4. Annotations Used:
+ *    - @Entity: Marks as JPA entity
+ *    - @Table: Specifies table name
+ *    - @Id: Marks primary key
+ *    - @GeneratedValue: Configures ID generation
+ *    - @Column: Configures column properties
+ *    - @Data: Lombok annotation for getters/setters
  * 
- *    - @Id:
- *      * Menandai field sebagai primary key
- *      * Wajib ada dalam setiap entitas JPA
- * 
- *    - @GeneratedValue:
- *      * Mengatur cara generate nilai primary key
- *      * IDENTITY: Menggunakan auto-increment database
- * 
- * 4. Field-field dalam Kelas:
- *    - id: Primary key, auto-generated
- *    - name: Nama lengkap pengguna
- *    - email: Alamat email pengguna
+ * 5. Best Practices:
+ *    - Clear field naming
+ *    - Proper data types
+ *    - Column constraints
+ *    - Lombok usage
+ *    - JPA annotations
  */
 @Entity
+@Table(name = "users")
 @Data
 public class User {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    /**
-     * Nama lengkap pengguna
-     * Digunakan untuk identifikasi pengguna
-     */
+    @Column(nullable = false)
     private String name;
     
-    /**
-     * Alamat email pengguna
-     * Digunakan untuk komunikasi dan validasi
-     */
+    @Column(nullable = false, unique = true)
     private String email;
 } 
