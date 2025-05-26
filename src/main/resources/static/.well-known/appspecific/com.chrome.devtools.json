@@ -1,0 +1,7 @@
+{
+    "name": "Learn01",
+    "description": "Spring Boot REST API Application",
+    "version": "1.0.0",
+    "type": "web",
+    "url": "http://localhost:8080"
+} 
